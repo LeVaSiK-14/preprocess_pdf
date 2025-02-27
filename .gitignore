@@ -1,0 +1,6 @@
+env/
+__pycache__/
+.env
+media/png_clear_lists/
+media/png_lists/
+media/png_lists_without_lines/
