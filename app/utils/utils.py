@@ -4,7 +4,7 @@ from app.utils.process_dirs import(
 )
 from app.utils.configs import(
     PNG_LISTS,
-    PNG_CLEAR_LISTS,
+    PNG_LISTS_WITHOUT_TABLES,
     PNG_LISTS_WITHOUT_LINES,
 )
 
@@ -12,9 +12,9 @@ from app.utils.configs import(
 def clear_media():
     delete_dir(
         PNG_LISTS,
-        PNG_CLEAR_LISTS,
+        PNG_LISTS_WITHOUT_TABLES,
         PNG_LISTS_WITHOUT_LINES,
     )
     create_dir(PNG_LISTS)
-    create_dir(PNG_CLEAR_LISTS)
+    create_dir(PNG_LISTS_WITHOUT_TABLES)
     create_dir(PNG_LISTS_WITHOUT_LINES)
