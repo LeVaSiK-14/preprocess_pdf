@@ -32,14 +32,14 @@ def main():
         pdf_dir_path=PDF_FILES,
         png_dir_path=PNG_LISTS
     )
-    delete_lines(
-        png_lists_dir_path=PNG_LISTS,
-        png_lists_without_lines_path=PNG_LISTS_WITHOUT_LINES
-    )
-    delete_tables(
-        png_lists_witout_lines_dir_path=PNG_LISTS_WITHOUT_LINES,
-        png_lists_without_tables_path=PNG_LISTS_WITHOUT_TABLES
-    )
+    # delete_lines(
+    #     png_lists_dir_path=PNG_LISTS,
+    #     png_lists_without_lines_path=PNG_LISTS_WITHOUT_LINES
+    # )
+    # delete_tables(
+    #     png_lists_witout_lines_dir_path=PNG_LISTS_WITHOUT_LINES,
+    #     png_lists_without_tables_path=PNG_LISTS_WITHOUT_TABLES
+    # )
     # delete_dir(PNG_LISTS, PNG_LISTS_WITHOUT_LINES)
 
 
