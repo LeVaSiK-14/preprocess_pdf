@@ -24,7 +24,6 @@ def delete_lines(png_lists_dir_path: str, png_lists_without_lines_path: str):
         
         for png_list in png_lists:
             png_list_path = get_full_path(png_dir_path, png_list)
-            png_list_name = get_file_name(png_list_path)
             
             
             # Загружаем изображение
