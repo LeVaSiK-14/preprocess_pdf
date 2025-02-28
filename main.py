@@ -1,8 +1,9 @@
 from app.utils.configs import(
     PNG_LISTS,
-    PNG_LISTS_WITHOUT_TABLES,
     PDF_FILES,
     PNG_LISTS_WITHOUT_LINES,
+    PNG_LISTS_WITHOUT_TABLES,
+    PNG_LISTS_WITHOUT_TEXT,
 )
 from app.utils.utils import(
     clear_media,
@@ -39,7 +40,7 @@ def main():
         png_lists_witout_lines_dir_path=PNG_LISTS_WITHOUT_LINES,
         png_lists_without_tables_path=PNG_LISTS_WITHOUT_TABLES
     )
-    delete_dir(PNG_LISTS, PNG_LISTS_WITHOUT_LINES)
+    # delete_dir(PNG_LISTS, PNG_LISTS_WITHOUT_LINES)
 
 
 if __name__ == "__main__":
