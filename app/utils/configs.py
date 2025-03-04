@@ -6,4 +6,16 @@ PDF_FILES: str = 'media/pdf_files' # Место хранения PDF файло�
 PNG_LISTS: str = 'media/png_lists' # Временное хранилище всех листов из PDF в формате PNG
 PNG_LISTS_WITHOUT_LINES: str = 'media/png_lists_without_lines' # Временное хранилище PNG листов без обводки листа
 PNG_LISTS_WITHOUT_TABLES: str = 'media/png_lists_without_tables' # Временное хранилище PNG листов без таблиц
-PNG_LISTS_WITHOUT_TEXT: str = 'media/png_lists_without_text' # Временное хранилище PNG листов без лишнего текста
+PNG_LISTS_BY_COLOR: str = 'media/png_lists_by_color' # Хранилище PNG листов разделеных по цветам
+
+
+BLUE: str = 'blue'
+RED: str = 'red'
+PINK: str = 'pink'
+ORANGE: str = 'orange'
+GREEN: str = 'green'
+
+COLORS: list = [
+    BLUE, RED, PINK,
+    ORANGE, GREEN,
+]
