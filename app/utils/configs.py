@@ -7,6 +7,7 @@ PNG_LISTS: str = 'media/png_lists' # Временное хранилище вс�
 PNG_LISTS_WITHOUT_LINES: str = 'media/png_lists_without_lines' # Временное хранилище PNG листов без обводки листа
 PNG_LISTS_WITHOUT_TABLES: str = 'media/png_lists_without_tables' # Временное хранилище PNG листов без таблиц
 PNG_LISTS_BY_COLOR: str = 'media/png_lists_by_color' # Хранилище PNG листов разделеных по цветам
+PNG_LISTS_CROPED: str = 'media/png_lists_croped' # Хранилище PNG листов разделеных по цветам
 
 
 BLUE: str = 'blue'

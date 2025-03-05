@@ -4,6 +4,7 @@ from app.utils.configs import(
     PNG_LISTS_WITHOUT_LINES,
     PNG_LISTS_WITHOUT_TABLES,
     PNG_LISTS_BY_COLOR,
+    PNG_LISTS_CROPED,
     COLORS,
 )
 from app.utils.utils import(
@@ -27,6 +28,9 @@ from app.get_lists_by_color import(
 from app.utils.process_dirs import(
     delete_dir,
 )
+from app.crop_images import(
+    crop_white_borders,
+)
 
 
 @measure_time
@@ -49,10 +53,18 @@ def main():
         png_lists_by_color_path=PNG_LISTS_BY_COLOR,
         colors=COLORS
     )
+    crop_white_borders(
+        png_lists_by_color_dir_path=PNG_LISTS_BY_COLOR,
+        png_lists_croped_path=PNG_LISTS_CROPED,
+        colors=COLORS,
+        threshold=250,
+        margin=20
+    )
     delete_dir(
         PNG_LISTS, 
         PNG_LISTS_WITHOUT_LINES,
-        PNG_LISTS_WITHOUT_TABLES
+        PNG_LISTS_WITHOUT_TABLES,
+        PNG_LISTS_BY_COLOR,
     )
 
 

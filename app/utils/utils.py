@@ -7,6 +7,7 @@ from app.utils.configs import(
     PNG_LISTS_WITHOUT_LINES,
     PNG_LISTS_WITHOUT_TABLES,
     PNG_LISTS_BY_COLOR,
+    PNG_LISTS_CROPED,
 )
 
 
@@ -15,12 +16,14 @@ def clear_media():
         PNG_LISTS,
         PNG_LISTS_WITHOUT_LINES,
         PNG_LISTS_WITHOUT_TABLES,
-        PNG_LISTS_BY_COLOR
+        PNG_LISTS_BY_COLOR,
+        PNG_LISTS_CROPED
     )
     create_dir(PNG_LISTS)
     create_dir(PNG_LISTS_WITHOUT_LINES)
     create_dir(PNG_LISTS_WITHOUT_TABLES)
     create_dir(PNG_LISTS_BY_COLOR)
+    create_dir(PNG_LISTS_CROPED)
 
 
 def create_dirs_by_color(png_lists_by_color_dir_path: str, folder_name: str, colors: list) -> dict:
