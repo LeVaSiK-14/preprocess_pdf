@@ -53,19 +53,19 @@ def main():
         png_lists_by_color_path=PNG_LISTS_BY_COLOR,
         colors=COLORS
     )
-    crop_white_borders(
-        png_lists_by_color_dir_path=PNG_LISTS_BY_COLOR,
-        png_lists_croped_path=PNG_LISTS_CROPED,
-        colors=COLORS,
-        threshold=250,
-        margin=20
-    )
-    delete_dir(
-        PNG_LISTS, 
-        PNG_LISTS_WITHOUT_LINES,
-        PNG_LISTS_WITHOUT_TABLES,
-        PNG_LISTS_BY_COLOR,
-    )
+    # crop_white_borders(
+    #     png_lists_by_color_dir_path=PNG_LISTS_BY_COLOR,
+    #     png_lists_croped_path=PNG_LISTS_CROPED,
+    #     colors=COLORS,
+    #     threshold=250,
+    #     margin=20
+    # )
+    # delete_dir(
+    #     PNG_LISTS, 
+    #     PNG_LISTS_WITHOUT_LINES,
+    #     PNG_LISTS_WITHOUT_TABLES,
+    #     PNG_LISTS_BY_COLOR,
+    # )
 
 
 if __name__ == "__main__":
