@@ -62,5 +62,15 @@ def filter_colors(input_image_path, output_image_path):
     cv2.imwrite(output_image_path, result)
     print(f"Сохранено отфильтрованное изображение в: {output_image_path}")
 
+
+list_images = [
+    "media/png_lists_without_tables/first/page_26.png",
+    "media/png_lists_without_tables/first/page_27.png",
+    "media/png_lists_without_tables/first/page_28.png",
+    "media/png_lists_without_tables/first/page_29.png",
+    "media/png_lists_without_tables/first/page_30.png",
+    "media/png_lists_without_tables/first/page_31.png",
+]
 # Пример вызова:
-filter_colors("media/png_lists_without_tables/first/page_26.png", "output_filtered2.png")
+for inx, el in enumerate(list_images):
+    filter_colors(el, f"filtered_images/output_filtered_{inx}.png")
