@@ -6,4 +6,6 @@ media/png_lists/
 media/png_lists_without_lines/
 media/png_lists_by_color/
 media/png_lists_croped/
+media/png_lists_clear/
 .vscode/
+filtered_images/

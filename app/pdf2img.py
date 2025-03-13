@@ -11,6 +11,7 @@ from app.utils.process_dirs import(
 from app.utils.timer import(
     measure_time,
 )
+from tqdm import tqdm
 
 
 @measure_time
@@ -34,5 +35,8 @@ def pdf2img(pdf_dir_path: str, png_dir_path: str) -> None:
         create_dir(full_dir_img_path) # Создаем эту директорию
         
         pages = convert_from_path(pdf_file_path) # Получаем все страницы из PDF файла
-        for i, page in enumerate(pages): # Получаем каждую страницу отдельно вместе с нумерацией
-            page.save(f'{full_dir_img_path}/page_{i+1}.png', 'PNG') # Сохраняем картинку в формате PNG с нумерацией по порядку
+        i = 1
+        for page in tqdm(pages): # Получаем каждую страницу отдельно вместе с нумерацией
+            page.save(f'{full_dir_img_path}/page_{i}.png', 'PNG') # Сохраняем картинку в формате PNG с нумерацией по порядку
+            i += 1
+        i = 0

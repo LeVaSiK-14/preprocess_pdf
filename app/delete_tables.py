@@ -9,6 +9,7 @@ from app.utils.process_dirs import(
 from app.utils.timer import(
     measure_time,
 )
+from tqdm import tqdm
 
 
 @measure_time
@@ -22,7 +23,7 @@ def delete_tables(png_lists_witout_lines_dir_path: str, png_lists_without_tables
         png_lists_without_tables_dir_path = get_full_path(png_lists_without_tables_path, png_dir)
         create_dir(png_lists_without_tables_dir_path)
         
-        for png_list in png_lists:
+        for png_list in tqdm(png_lists):
             png_list_path = get_full_path(png_dir_path, png_list)
     
             # Загружаем изображение
