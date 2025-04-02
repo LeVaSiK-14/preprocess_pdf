@@ -9,6 +9,7 @@ from app.utils.timer import(
     measure_time,
 )
 from tqdm import tqdm
+import numpy as np
 
 
 @measure_time
@@ -31,17 +32,28 @@ def delete_lines(png_lists_dir_path: str, png_lists_without_lines_path: str):
 
             # Бинаризация (инвертируем, чтобы чёрные линии стали белыми в маске)
             _, bin_img = cv2.threshold(gray, 50, 255, cv2.THRESH_BINARY_INV)
+            
+            hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+            lower_red1 = np.array([0, 100, 100])
+            upper_red1 = np.array([10, 255, 255])
+            lower_red2 = np.array([160, 100, 100])
+            upper_red2 = np.array([180, 255, 255])
+            mask_red = cv2.inRange(hsv, lower_red1, upper_red1) | cv2.inRange(hsv, lower_red2, upper_red2)
+            
+            combined_mask = cv2.bitwise_or(bin_img, mask_red)
 
-            height, width = bin_img.shape
+
+
+            height, width = combined_mask.shape
 
             # ---------- Поиск горизонтальных линий ----------
             h_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (50, 1))
-            h_lines = cv2.morphologyEx(bin_img, cv2.MORPH_OPEN, h_kernel)
+            h_lines = cv2.morphologyEx(combined_mask, cv2.MORPH_OPEN, h_kernel)
             h_contours, _ = cv2.findContours(h_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
             # ---------- Поиск вертикальных линий ----------
             v_kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (1, 50))
-            v_lines = cv2.morphologyEx(bin_img, cv2.MORPH_OPEN, v_kernel)
+            v_lines = cv2.morphologyEx(combined_mask, cv2.MORPH_OPEN, v_kernel)
             v_contours, _ = cv2.findContours(v_lines, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
             # Копируем оригинальное изображение для результата

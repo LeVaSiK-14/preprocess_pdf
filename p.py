@@ -1,47 +1,22 @@
-import fitz  # pip install PyMuPDF
+img = 'media/png_lists_croped/first/page_26.png'
 
-# Открываем PDF
-doc = fitz.open("output_no_text2.pdf")
+import cv2
+import numpy as np
 
-# Словарь замен: ключ — исходное слово, значение — новое слово
-replacements = {
-    "а": "", "б": "", "в": "", "г": "", 
-    "д": "", "е": "", "ё": "", "ж": "",
-    "з": "", "и": "", "й": "", "к": "",
-    "л": "", "м": "", "н": "", "о": "",
-    "п": "", "р": "", "с": "", "т": "",
-    "у": "", "ф": "", "х": "", "ц": "",
-    "ч": "", "ш": "", "щ": "", "ъ": "",
-    "ы": "", "ь": "", "э": "", "ю": "",
-    "я": "",
-    
-    "1": "", "2": "", "3": "", "4": "", "5": "", 
-    "6": "", "7": "", "8": "", "9": "", "0": "",
-    
-    
-    ".": "", ",": "", "(": "",
-    ")": "", "-": "", "/": "",
-    "_": "", '"': "", " ": "",
-    ":": "", ";": "", "%": ""
-}
 
-for page in doc:
-    for old_word, new_word in replacements.items():
-        # Ищем все вхождения исходного слова на странице
-        areas = page.search_for(old_word)
-        for area in areas:
-            # Накладываем белый прямоугольник по найденной области для маскировки исходного слова
-            page.add_redact_annot(area, fill=(1, 1, 1))
-        # Применяем аннотации редактирования (маскировки)
-        page.apply_redactions()
-        
-        # После маскировки можно добавить новый текст поверх того же места.
-        # Учтите, что для каждого найденного места нужно определить оптимальное позиционирование.
-        for area in areas:
-            # Координаты для вставки нового текста
-            x, y = area.x0, area.y0
-            # Вставляем новый текст. Параметры (размер, шрифт) могут быть подобраны индивидуально.
-            page.insert_text((x, y), new_word, fontsize=12, color=(0, 0, 0))
-            
-# Сохраняем новый PDF
-doc.save("output.pdf")
+img = cv2.imread(img) 
+
+hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+lower_gray = np.array([0, 0, 100])
+upper_gray = np.array([179, 50, 200])
+
+mask = cv2.inRange(hsv, lower_gray, upper_gray)
+
+mask_inv = cv2.bitwise_not(mask)
+
+result = cv2.bitwise_and(img, img, mask=mask_inv)
+white_background = np.full(img.shape, 255, dtype=np.uint8)
+final = cv2.bitwise_or(result, cv2.bitwise_and(white_background, white_background, mask=mask))
+
+cv2.imwrite("blueprint_no_gray.png", final)

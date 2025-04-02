@@ -5,6 +5,7 @@ from app.utils.configs import(
     PNG_LISTS_WITHOUT_TABLES,
     PNG_LISTS_CROPED,
     PNG_LISTS_CLEAR,
+    PNG_LISTS_TILE,
 )
 from app.utils.utils import(
     clear_media,
@@ -22,9 +23,6 @@ from app.delete_tables import(
     delete_tables,
 )
 from app.clear_image import(
-    filter_colors,
-)
-from app.clear_image2 import(
     remove_gray,
 )
 from app.utils.process_dirs import(
@@ -50,10 +48,6 @@ def main():
         png_lists_witout_lines_dir_path=PNG_LISTS_WITHOUT_LINES,
         png_lists_without_tables_path=PNG_LISTS_WITHOUT_TABLES
     )
-    # filter_colors(
-    #     PNG_LISTS_WITHOUT_TABLES,
-    #     PNG_LISTS_CLEAR
-    # )
     remove_gray(
         PNG_LISTS_WITHOUT_TABLES,
         PNG_LISTS_CLEAR
@@ -65,10 +59,11 @@ def main():
         margin=20
     )
     delete_dir(
-        PNG_LISTS, 
-        PNG_LISTS_WITHOUT_LINES,
+        PNG_LISTS,
         PNG_LISTS_WITHOUT_TABLES,
+        PNG_LISTS_WITHOUT_LINES,
         PNG_LISTS_CLEAR,
+        PNG_LISTS_TILE,
     )
 
 
