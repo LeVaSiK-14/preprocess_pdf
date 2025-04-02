@@ -1,22 +1,81 @@
-img = 'media/png_lists_croped/first/page_26.png'
-
 import cv2
+import math
 import numpy as np
+import os
+
+def get_tile_starts(dim_size, tile_size, overlap):
+
+    starts = []
+    step = tile_size - overlap
+    pos = 0
+
+    while True:
+        if pos > dim_size - tile_size:
+            break
+        starts.append(pos)
+        pos += step
+
+    last_pos = dim_size - tile_size
+    if last_pos not in starts:
+        if starts and starts[-1] < last_pos:
+            starts.append(last_pos)
+        elif not starts:
+            starts.append(0)
+    
+    return starts
 
 
-img = cv2.imread(img) 
+def split_image_into_tiles(
+    image_path: str,
+    output_dir: str,
+    tile_size: int = 3000,
+    overlap: int = 1500,
+    info_txt_name: str = "tiles_info.txt"
+):
 
-hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+    img = cv2.imread(image_path)
+    if img is None:
+        raise FileNotFoundError(f"Не удалось открыть изображение: {image_path}")
 
-lower_gray = np.array([0, 0, 100])
-upper_gray = np.array([179, 50, 200])
+    orig_height, orig_width = img.shape[:2]
 
-mask = cv2.inRange(hsv, lower_gray, upper_gray)
+    new_width = math.ceil(orig_width / tile_size) * tile_size
+    new_height = math.ceil(orig_height / tile_size) * tile_size
 
-mask_inv = cv2.bitwise_not(mask)
+    canvas = np.full((new_height, new_width, 3), 255, dtype=np.uint8)
+    canvas[:orig_height, :orig_width] = img
 
-result = cv2.bitwise_and(img, img, mask=mask_inv)
-white_background = np.full(img.shape, 255, dtype=np.uint8)
-final = cv2.bitwise_or(result, cv2.bitwise_and(white_background, white_background, mask=mask))
+    x_starts = get_tile_starts(new_width, tile_size, overlap)
+    y_starts = get_tile_starts(new_height, tile_size, overlap)
 
-cv2.imwrite("blueprint_no_gray.png", final)
+    os.makedirs(output_dir, exist_ok=True)
+
+    info_path = os.path.join(output_dir, info_txt_name)
+    with open(info_path, "w", encoding="utf-8") as f:
+        tile_index = 0
+        for y0 in y_starts:
+            for x0 in x_starts:
+                x1 = x0 + tile_size
+                y1 = y0 + tile_size
+
+                tile = canvas[y0:y1, x0:x1]
+
+                tile_filename = f"tile_{tile_index}_{x0}_{y0}.png"
+                tile_path = os.path.join(output_dir, tile_filename)
+                cv2.imwrite(tile_path, tile)
+
+                f.write(f"{tile_filename}: {x0},{y0},{x1},{y1}\n")
+
+                tile_index += 1
+
+if __name__ == "__main__":
+    input_image = "images/2600_2700.png"
+    output_folder = "tiles_output"
+    
+    split_image_into_tiles(
+        image_path=input_image,
+        output_dir=output_folder,
+        tile_size=3000,
+        overlap=1500,
+        info_txt_name="tiles_info.txt"
+    )
