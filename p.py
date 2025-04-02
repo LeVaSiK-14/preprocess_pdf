@@ -4,35 +4,30 @@ import numpy as np
 import os
 
 def get_tile_starts(dim_size, tile_size, overlap):
-
     starts = []
     step = tile_size - overlap
     pos = 0
-
     while True:
         if pos > dim_size - tile_size:
             break
         starts.append(pos)
         pos += step
-
     last_pos = dim_size - tile_size
     if last_pos not in starts:
         if starts and starts[-1] < last_pos:
             starts.append(last_pos)
         elif not starts:
             starts.append(0)
-    
     return starts
 
 
 def split_image_into_tiles(
     image_path: str,
-    output_dir: str,
     tile_size: int = 3000,
     overlap: int = 1500,
     info_txt_name: str = "tiles_info.txt"
 ):
-
+    output_dir = image_path.split('/')[-1].replace('.png', '')
     img = cv2.imread(image_path)
     if img is None:
         raise FileNotFoundError(f"Не удалось открыть изображение: {image_path}")
@@ -64,18 +59,13 @@ def split_image_into_tiles(
                 tile_path = os.path.join(output_dir, tile_filename)
                 cv2.imwrite(tile_path, tile)
 
-                f.write(f"{tile_filename}: {x0},{y0},{x1},{y1}\n")
+                f.write(f"{tile_path}: {x0},{y0},{x1},{y1}\n")
 
                 tile_index += 1
 
 if __name__ == "__main__":
     input_image = "images/2600_2700.png"
-    output_folder = "tiles_output"
     
     split_image_into_tiles(
-        image_path=input_image,
-        output_dir=output_folder,
-        tile_size=3000,
-        overlap=1500,
-        info_txt_name="tiles_info.txt"
+        image_path=input_image
     )
