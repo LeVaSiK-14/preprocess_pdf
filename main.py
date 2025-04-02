@@ -31,6 +31,9 @@ from app.utils.process_dirs import(
 from app.crop_images import(
     crop_white_borders,
 )
+from app.tiled_images import(
+    tiled_images,
+)
 
 
 @measure_time
@@ -58,12 +61,16 @@ def main():
         threshold=250,
         margin=20
     )
+    tiled_images(
+        image_path_dir=PNG_LISTS_CROPED,
+        output_dir_path=PNG_LISTS_TILE
+    )
     delete_dir(
         PNG_LISTS,
         PNG_LISTS_WITHOUT_TABLES,
         PNG_LISTS_WITHOUT_LINES,
         PNG_LISTS_CLEAR,
-        PNG_LISTS_TILE,
+        PNG_LISTS_CROPED,
     )
 
 

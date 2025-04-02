@@ -27,7 +27,7 @@ def split_image_into_tiles(
     overlap: int = 1500,
     info_txt_name: str = "tiles_info.txt"
 ):
-    output_dir = image_path.split('/')[-1].replace('.png', '')
+    output_dir = os.path.join('media', image_path.split('/')[-1].replace('.png', ''))
     img = cv2.imread(image_path)
     if img is None:
         raise FileNotFoundError(f"Не удалось открыть изображение: {image_path}")
