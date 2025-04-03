@@ -1,7 +1,6 @@
 import cv2
 import math
 import numpy as np
-import os
 from app.utils.get_tile_starts import(
     get_tile_starts,
 )
@@ -9,11 +8,11 @@ from app.utils.process_dirs import(
     get_full_path,
     get_dirs_from_dir,
     get_files_from_dir,
-    create_dir,
 )
 from app.utils.timer import(
     measure_time,
 )
+from app.utils.get_file_name import get_file_name
 from tqdm import tqdm
 
 
@@ -30,14 +29,9 @@ def tiled_images(
         png_dir_name_path = get_full_path(image_path_dir, pnd_dir_name)
         png_lists_clear = get_files_from_dir(png_dir_name_path)
         
-        png_croped_result_path = get_full_path(output_dir_path, pnd_dir_name)
-        create_dir(png_croped_result_path)
-        
         for png_list_name in tqdm(png_lists_clear):
             
             png_list_name_full_path = get_full_path(png_dir_name_path, png_list_name)
-            output_dir = get_full_path(png_croped_result_path, png_list_name_full_path.split('/')[-1].replace('.png', ''))
-            create_dir(output_dir)
             
             img = cv2.imread(png_list_name_full_path)
             if img is None:
@@ -54,10 +48,8 @@ def tiled_images(
             x_starts = get_tile_starts(new_width, tile_size, overlap)
             y_starts = get_tile_starts(new_height, tile_size, overlap)
 
-            os.makedirs(output_dir, exist_ok=True)
-
-            info_path = os.path.join(output_dir, info_txt_name)
-            with open(info_path, "w", encoding="utf-8") as f:
+            info_path = get_full_path(output_dir_path, info_txt_name)
+            with open(info_path, "a", encoding="utf-8") as f:
                 tile_index = 0
                 for y0 in y_starts:
                     for x0 in x_starts:
@@ -65,12 +57,11 @@ def tiled_images(
                         y1 = y0 + tile_size
 
                         tile = canvas[y0:y1, x0:x1]
-
-                        tile_filename = f"tile_{tile_index}_{x0}_{y0}.png"
-                        tile_path = get_full_path(output_dir, tile_filename)
+                        list_num = get_file_name(png_list_name)
+                        tile_filename = f"{pnd_dir_name}_{list_num}__{tile_index}___{x0}____{y0}_____{x1}______{y1}.png"
+                        tile_path = get_full_path(output_dir_path, tile_filename)
                         cv2.imwrite(tile_path, tile)
 
                         f.write(f"{tile_path}: {x0},{y0},{x1},{y1}\n")
 
                         tile_index += 1
-

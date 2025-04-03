@@ -37,6 +37,6 @@ def pdf2img(pdf_dir_path: str, png_dir_path: str) -> None:
         pages = convert_from_path(pdf_file_path) # Получаем все страницы из PDF файла
         i = 1
         for page in tqdm(pages): # Получаем каждую страницу отдельно вместе с нумерацией
-            page.save(f'{full_dir_img_path}/page_{i}.png', 'PNG') # Сохраняем картинку в формате PNG с нумерацией по порядку
+            page.save(f'{full_dir_img_path}/page{i}.png', 'PNG') # Сохраняем картинку в формате PNG с нумерацией по порядку
             i += 1
         i = 0
