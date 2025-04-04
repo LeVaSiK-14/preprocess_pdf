@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 from app.utils.process_dirs import(
-    get_dirs_from_dir,
     get_files_from_dir,
     create_dir,
     get_full_path,
